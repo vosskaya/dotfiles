@@ -1,5 +1,5 @@
 " obtain newest version of this file with
-" curl -o ~/.vimrc https://gist.githubusercontent.com/vosskaem/490659a43c8b30a465791572d2557d16/raw/.vimrc
+" curl -o ~/.vimrc https://raw.githubusercontent.com/vosskaem/dotfiles/refs/heads/main/home/dot_vimrc
 " Do not change the following lines. They load defaults from .vim/vimrc
 if has('win32')
     " GVim should share this files with cygwin

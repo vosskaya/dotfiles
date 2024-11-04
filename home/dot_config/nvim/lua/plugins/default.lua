@@ -1,3 +1,7 @@
+-- default.lua
+-- obtain newest version of this file with
+-- curl --create-dirs -o ~/.config/nvim/lua/plugins/default.lua https://raw.githubusercontent.com/vosskaem/dotfiles/refs/heads/main/home/dot_config/nvim/lua/plugins/default.lua
+
 return {
     {
         "morhetz/gruvbox",

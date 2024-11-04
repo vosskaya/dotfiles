@@ -1,3 +1,7 @@
+-- lazy.lua
+-- obtain newest version of this file with
+-- curl --create-dirs -o ~/.config/nvim/lua/config/lazy.lua https://raw.githubusercontent.com/vosskaem/dotfiles/refs/heads/main/home/dot_config/nvim/lua/config/lazy.lua
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then

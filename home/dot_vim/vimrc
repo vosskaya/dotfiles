@@ -1,5 +1,5 @@
 " obtain newest version of this file with
-" curl --create-dirs -o ~/.vim/vimrc https://gist.githubusercontent.com/vosskaem/490659a43c8b30a465791572d2557d16/raw/vimrc
+" curl --create-dirs -o ~/.vim/vimrc https://raw.githubusercontent.com/vosskaem/dotfiles/refs/heads/main/home/dot_vim/vimrc
 unlet! skip_defaults_vim
 silent! source $VIMRUNTIME/defaults.vim
 

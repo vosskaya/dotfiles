@@ -1,5 +1,5 @@
 " obtain newest version of this file with
-" curl --create-dirs -o ~/.config/nvim/ginit.vim https://gist.githubusercontent.com/vosskaem/490659a43c8b30a465791572d2557d16/raw/ginit.vim
+" curl --create-dirs -o ~/.config/nvim/ginit.vim https://raw.githubusercontent.com/vosskaem/dotfiles/refs/heads/main/home/dot_config/nvim/ginit.vim
 
 set mouse=a
 
