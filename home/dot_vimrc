@@ -1,0 +1,30 @@
+" obtain newest version of this file with
+" curl -o ~/.vimrc https://gist.githubusercontent.com/vosskaem/490659a43c8b30a465791572d2557d16/raw/.vimrc
+" Do not change the following lines. They load defaults from .vim/vimrc
+if has('win32')
+    " GVim should share this files with cygwin
+    set runtimepath-=~/vimfiles
+    set runtimepath^=~/.vim
+    set runtimepath-=~/vimfiles/after
+    set runtimepath+=~/.vim/after
+endif
+runtime vimrc
+" you can overwrite any config option below this comment
+
+" colo gruvbox
+
+" colo ayu
+" let g:airline_theme='ayu_mirage'
+
+"" Disable highlighting search results. But you can instead switch them off
+"" after search with :noh
+" set nohlsearch
+
+" Show trailing whitespace in files:
+let g:show_trailertrash = 0
+
+" Auto delete trailing whitespace in selected files:
+autocmd BufWritePre *.yml :let _s=@/|:%s/\s\+$//e|:let @/=_s|
+autocmd BufWritePre *.cfg :let _s=@/|:%s/\s\+$//e|:let @/=_s|
+autocmd BufWritePre *.ini :let _s=@/|:%s/\s\+$//e|:let @/=_s|
+autocmd BufWritePre *.md  :let _s=@/|:%s/\s\+$//e|:let @/=_s|

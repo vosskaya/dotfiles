@@ -1,0 +1,357 @@
+" obtain newest version of this file with
+" curl --create-dirs -o ~/.vim/vimrc https://gist.githubusercontent.com/vosskaem/490659a43c8b30a465791572d2557d16/raw/vimrc
+unlet! skip_defaults_vim
+silent! source $VIMRUNTIME/defaults.vim
+
+
+if !has('nvim')
+    if has('win32')
+        " Windows only settings
+        " :set guifont=Lucida_Console:h11:cDEFAULT
+        :set guifont=Consolas:h11:cANSI:qDRAFT
+    endif
+
+    if has('linux')
+        " Linux only settings
+        "set guifont=FiraCode\ Nerd\ Font\ Mono\ 11
+         set guifont=JetBrainsMono\ Nerd\ Font\ Mono\ 11
+        " set guifont=SauceCodePro\ Nerd\ Font\ Mono\ 11
+        " set guifont=Hack\ Nerd\ Font\ Mono\ 11
+        " set guifont=monospace\ regular\ 11
+    endif
+endif
+
+
+if !has('nvim')
+    " Install vim-plug if not found
+    " https://github.com/junegunn/vim-plug
+    let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+    if empty(glob(data_dir . '/autoload/plug.vim'))
+        silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
+
+    " Run PlugInstall if there are missing plugins
+    autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+                \| PlugInstall --sync | source $MYVIMRC
+                \| endif
+
+    call plug#begin()
+    " Plug 'junegunn/vim-plug'
+    Plug 'Luxed/ayu-vim'
+    Plug 'morhetz/gruvbox'
+    Plug 'sainnhe/gruvbox-material'
+    Plug 'srcery-colors/srcery-vim'
+    Plug 'tomasr/molokai'
+    Plug 'sainnhe/sonokai'
+    " ---
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    " ---
+    Plug 'mhinz/vim-startify'
+    Plug 'andymass/vim-matchup'
+    Plug 'csexton/trailertrash.vim'
+    Plug 'tpope/vim-unimpaired'
+    Plug 'junegunn/fzf'
+    Plug 'junegunn/fzf.vim'
+    Plug 'sheerun/vim-polyglot'
+    "Plug 'scrooloose/nerdtree'
+    " Plug 'lambdalisue/fern.vim'
+    Plug 'machakann/vim-sandwich'  " Use with keybindings from 'tpope/vim-surround'. See settings below.
+    Plug 'liuchengxu/vim-which-key'
+    Plug 'tpope/vim-fugitive'
+    " Plug 'airblade/vim-gitgutter'
+    " Plug 'dense-analysis/ale'
+    "Plug 'ervandew/supertab'
+    " Plug 'preservim/tagbar'  " ctags should be installed (https://ctags.io/)
+     Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+    " Spezifische Plugins für Vim und Neovim
+    if !has('nvim')
+        " for these plugins exist lua based plugins for nvim
+        Plug 'jiangmiao/auto-pairs'
+        Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+        Plug 'tpope/vim-commentary'  " use gcc to comment out a line. see https://github.com/tpope/vim-commentary
+    endif
+    call plug#end()
+    call plug#helptags()
+endif
+
+" --- Generic Settings START ----
+" GUI Settings
+if has('gui_running')
+    set lines=50
+    set columns=120
+    set mouse=a
+    set number
+    set relativenumber
+else
+    if exists("$SSH_CONNECTION") || exists("$SUDO_USER") " you don't know if youre on ssh if you did sudo
+        set mouse=h                   " In Putty mouse mode is bad - so only for help files
+        set nonumber                  " We don't want terminal mouse copy line numbers
+        set norelativenumber
+    else
+        if has('nvim')
+            set mouse=a
+            set number
+            set relativenumber
+        else
+            set mouse=h                   " vim has no mouse context menu - copy to clipboard is ...
+            set nonumber                  " We don't want terminal mouse copy line numbers
+            set norelativenumber
+        endif
+    endif
+endif
+set encoding=UTF-8
+" set lazyredraw
+set history=1000
+set hidden
+set confirm
+set autoread
+syntax on
+filetype on
+filetype plugin on
+filetype indent on
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+set nowrap
+set scrolloff=5
+set sidescroll=1
+set sidescrolloff=5
+set history=1000
+set laststatus=2              " Set up the status line so it's coloured and always on
+set noshowmode
+set smartindent               " Automatically insert extra level of indentation
+set smarttab
+set expandtab                 " Expand [TABS] to spaces
+set tabstop=4                 " Default tabstop
+set shiftwidth=4              " Default indent spacing
+set softtabstop=4
+"set colorcolumn=80
+set wildmenu                  " Enable auto completion menu after pressing TAB.
+set wildmode=list:longest     " Make wildmenu behave like similar to Bash completion.
+set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
+
+" Delete comment character when joining commented lines.
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j
+endif
+
+" Use CTRL-L to clear the highlighting of 'hlsearch' (off by default) and call
+" :diffupdate.
+if maparg('<C-L>', 'n') ==# ''
+  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+endif
+
+" Disable completing keywords in included files (e.g., #include in C).  When
+" configured properly, this can result in the slow, recursive scanning of
+" hundreds of files of dubious relevance.
+set complete-=i
+
+" Enable the :Man command shipped inside Vim's man filetype plugin.
+if exists(':Man') != 2 && !exists('g:loaded_man') && &filetype !=? 'man' && !has('nvim')
+  runtime ftplugin/man.vim
+endif
+" --- Generic Settings END ----
+
+
+" --- custom key bindings START ---
+if v:version >= 800
+    " For Vim 8.0 and higher: exit from normal mode in terminal
+    tnoremap <esc> <C-\><C-n>
+    " but not in an fzf popup window
+    autocmd FileType fzf tnoremap <buffer> <Esc> <C-c>
+endif
+"nnoremap <esc><esc> :silent! nohls<cr>
+set pastetoggle=<F2>
+noremap <F3> :NERDTreeToggle<CR>
+" let mapleader=","
+let mapleader="\<space>"
+"Map buffer quick switch keys"
+nnoremap <silent> <leader><Tab> <C-^>
+noremap <Leader>1 :silent! eval(win_gotoid(win_getid(1)))<CR>
+noremap <Leader>2 :silent! eval(win_gotoid(win_getid(2)))<CR>
+noremap <Leader>3 :silent! eval(win_gotoid(win_getid(3)))<CR>
+noremap <Leader>4 :silent! eval(win_gotoid(win_getid(4)))<CR>
+noremap <Leader>5 :silent! eval(win_gotoid(win_getid(5)))<CR>
+noremap <Leader>6 :silent! eval(win_gotoid(win_getid(6)))<CR>
+noremap <Leader>7 :silent! eval(win_gotoid(win_getid(7)))<CR>
+noremap <Leader>8 :silent! eval(win_gotoid(win_getid(8)))<CR>
+noremap <Leader>9 :silent! eval(win_gotoid(win_getid(9)))<CR>
+noremap <Leader>p "+p
+noremap <Leader>y "+y
+noremap <leader>/ :Commentary<cr>
+noremap <Leader>as :Startify<CR>
+noremap <Leader>bb :buffers<CR>
+noremap <Leader>bd :bdelete<CR>
+noremap <Leader>bf :bfirst<CR>
+noremap <Leader>bn :bnext<CR>
+noremap <Leader>bl :blast<CR>
+" write current buffer with sudo
+noremap <Leader>bW :write !sudo tee % > /dev/null
+noremap <Leader>bt :TrailerTrim<CR>
+nnoremap <silent> <leader>fe :edit<Space>
+nnoremap <silent> <leader>f/ :find<Space>
+nnoremap <silent> <leader>fr :edit!<CR>
+noremap gb :bnext<CR>
+noremap <Leader>to :Trailer<CR>
+noremap <Leader>tt :TrailerTrim<CR>
+if &runtimepath =~ 'vim-which-key'
+    nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+    " nnoremap <silent> g             :<c-u>WhichKey 'g'<CR>
+    " nnoremap <silent> c             :<c-u>WhichKey 'c'<CR>
+    " nnoremap <silent> y             :<c-u>WhichKey 'y'<CR>
+    "set timeoutlen=500
+endif
+"--- FZF settings
+nnoremap <silent> <leader>fb :BLines<cr>
+nnoremap <silent> <leader>ff :Files<cr>
+nnoremap <silent> <leader>fg :GFiles<CR>
+nnoremap <silent> <leader>fl :Lines<cr>
+nnoremap <silent> <leader>bB :Buffers <cr>
+" Mapping selecting mappings
+nmap <leader>M <plug>(fzf-maps-n)
+xmap <leader>M <plug>(fzf-maps-x)
+omap <leader>M <plug>(fzf-maps-o)
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+" --- custom key bindings END ---
+
+
+" ------ Settings for vim-sandwich START ----
+silent! let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+" Use keybindings from vim-surround
+runtime macros/sandwich/keymap/surround.vim
+" add spaces inside bracket when using opening bracket (like vim-surround does)
+silent! let g:sandwich#recipes += [
+            \   {'buns': ['{ ', ' }'], 'nesting': 1, 'match_syntax': 1, 'kind': ['add', 'replace'], 'action': ['add'], 'input': ['{']},
+            \   {'buns': ['[ ', ' ]'], 'nesting': 1, 'match_syntax': 1, 'kind': ['add', 'replace'], 'action': ['add'], 'input': ['[']},
+            \   {'buns': ['( ', ' )'], 'nesting': 1, 'match_syntax': 1, 'kind': ['add', 'replace'], 'action': ['add'], 'input': ['(']},
+            \   {'buns': ['{\s*', '\s*}'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['{']},
+            \   {'buns': ['\[\s*', '\s*\]'], 'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['[']},
+            \   {'buns': ['(\s*', '\s*)'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['(']},
+            \ ]
+" ---- Settings for vim-sandwich END ----
+
+
+" ------ Settings for TrailerTrash START ----
+let g:show_trailertrash = 1
+let g:trailertrash_blacklist = ['__Calendar', '^http:']
+" ------ Settings for TrailerTrash END ----
+
+
+" ---- colorscheme ayu START ----
+" contained in vim-colorschemes
+" a fork of ayu: https://github.com/Luxed/ayu-vim
+" NOTE: `background` controls `g:ayucolor`, but `g:ayucolor` doesn't control `background`
+let g:ayucolor="dark"   " for dark version of theme
+" let g:ayucolor="mirage" " for mirage version of theme
+" NOTE: g:ayucolor will default to 'dark' when not set.
+" ayu_italic_comment defaults to 0.
+let g:ayu_italic_comment = 1
+" ayu_sign_contrast defaults to 0. If set to 1, SignColumn and FoldColumn will
+" have a higher contrast instead of using the Normal background
+let g:ayu_sign_contrast = 1
+" ayu_extended_palette defaults to 0. If set to 1, enables extended
+"  palette. Adds more colors to some highlights (function keyword, loops,
+"  conditionals, imports)
+let g:ayu_extended_palette = 1
+" Error has no background in original colorscheme so whitespace highlighting
+" does not work:
+autocmd ColorScheme ayu hi Error term=reverse cterm=bold ctermfg=7 ctermbg=1 gui=bold guifg=#FCE8C3 guibg=#fb4934
+" autocmd ColorScheme ayu hi MatchParen term=reverse cterm=underline ctermbg=6 gui=underline guifg=#bfbdb6 guibg=#0d1017
+autocmd ColorScheme ayu hi MatchParen term=reverse cterm=bold ctermbg=6 gui=bold guifg=#FFB179 guibg=#0d1017
+" cterm=bold gui=bold guifg=#FFB179
+" ---- colorscheme ayu END ----
+
+
+" ---- colorscheme gruvbox START ----
+" Possible values: soft, medium, hard
+let g:gruvbox_contrast_dark="hard"
+let g:gruvbox_contrast_light="medium"
+autocmd ColorScheme gruvbox hi Error term=reverse cterm=bold ctermfg=7 ctermbg=1 gui=bold guifg=#FCE8C3 guibg=#fb4934
+" ---- colorscheme gruvbox END ----
+
+
+" ---- airline Settings START ----
+" let g:airline_powerline_fonts = 1
+let g:airline_symbols_ascii = 1
+let g:airline#extensions#tabline#enabled = 1
+" aautocmd ColorScheme ayu let g:airline_theme='ayu_mirage'
+function! WindowNumber(...)
+    let builder = a:1
+    let context = a:2
+    call builder.add_section('airline_b', '%{tabpagewinnr(tabpagenr())}')
+    return 0
+endfunction
+silent! call airline#add_statusline_func('WindowNumber')
+silent! call airline#add_inactive_statusline_func('WindowNumber')
+" ---- airline Settings END ----
+
+
+" ---- Generic Color Scheme Settings START ----
+silent! set termguicolors
+set background=dark
+
+colo desert
+" silent! colo ayu
+silent! colo gruvbox
+" silent! colo srcery
+" ---- Generic Color Scheme Settings END ----
+
+
+" ---- NERDTree Settings START ----
+" let NERDTreeShowHidden=1  "  Always show dot files
+" let NERDTreeQuitOnOpen=1
+let NERDTreeChDirMode=1
+let NERDTreeMinimalUI=1
+let NERDTreeWinPos = 'right'
+let NERDTreeWinSize=35
+" map  <Leader>n  :NERDTreeFind<CR>
+" ---- NERDTree Settings END ----
+
+
+" ---- Explorer Settings START ----
+"# netrw settings:
+"let g:netrw_banner = 0
+"let g:netrw_liststyle = 3
+"let g:netrw_browse_split = 4
+"let g:netrw_altv = 1
+"let g:netrw_winsize = 25
+"augroup ProjectDrawer
+"  autocmd!
+"  autocmd VimEnter * :Vexplore
+"augroup END
+" ---- Explorer Settings END ----
+
+" Special settings for singele file types
+autocmd FileType yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent
+autocmd FileType gitcommit setlocal colorcolumn=80
+autocmd FileType apache setlocal commentstring=#\ %s
+autocmd FileType samba setlocal commentstring=#\ %s
+
+"" Fix the non working vim default. See: :h restore-cursor
+au! VimEnter COMMIT_EDITMSG exec 'norm gg'
+" au! VimEnter COMMIT_EDITMSG exec 'norm gg' | startinsert!
+
+" nvim does not jump to the last position by default
+" see also https://github.com/ethanholz/nvim-lastplace
+if has('nvim')
+    autocmd BufReadPost * silent! normal! g`"
+endif
+
+ " load local development function if exists
+ let local_highlight_strings = expand('~/.vim/highlight_strings_from_file')
+ if filereadable(local_highlight_strings)
+     execute 'source ' . local_highlight_strings
+ endif
+
+" load a local config if exists
+let local_vimrc = expand('~/.vim/vimrc_local')
+if filereadable(local_vimrc)
+    execute 'source ' . local_vimrc
+endif
+

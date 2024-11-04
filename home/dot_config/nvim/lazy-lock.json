@@ -1,0 +1,21 @@
+{
+  "ayu-vim": { "branch": "master", "commit": "ba4e08ec392afd0aaeaf594ba7e29b0652a0a094" },
+  "fzf": { "branch": "master", "commit": "ff1687744db737c935db0f8e4d29373db9f84d8c" },
+  "fzf.vim": { "branch": "master", "commit": "ec75ffbfd50630bf2b8d444d89487e149bacf7f3" },
+  "gruvbox": { "branch": "master", "commit": "f1ecde848f0cdba877acb0c740320568252cc482" },
+  "lazy.nvim": { "branch": "main", "commit": "cf8ecc2c5e4332760431a33534240b0cbc6680ab" },
+  "nvim-autopairs": { "branch": "master", "commit": "ee297f215e95a60b01fde33275cc3c820eddeebe" },
+  "nvim-lspconfig": { "branch": "master", "commit": "28b205ebe73a18f401e040585106f9bafd8ff21f" },
+  "orgmode": { "branch": "master", "commit": "c6540955acbec33a0d0b4b1cb97da3e0bf99b4e1" },
+  "rust-tools.nvim": { "branch": "master", "commit": "676187908a1ce35ffcd727c654ed68d851299d3e" },
+  "trailertrash.vim": { "branch": "master", "commit": "d4109aac96972ae759b389d3b374c1f4c058ee4f" },
+  "vim-airline": { "branch": "master", "commit": "3ddcab16c26760d7b94ef0b1f8b62f9bc1ea8cba" },
+  "vim-airline-themes": { "branch": "master", "commit": "a9aa25ce323b2dd04a52706f4d1b044f4feb7617" },
+  "vim-fugitive": { "branch": "master", "commit": "d4877e54cef67f5af4f950935b1ade19ed6b7370" },
+  "vim-matchup": { "branch": "master", "commit": "2328f4a3082093fe61f6d8004572f905cc1b58f4" },
+  "vim-polyglot": { "branch": "master", "commit": "692e359ad9344d6e69626131f5c96743560e4d53" },
+  "vim-sandwich": { "branch": "master", "commit": "74cf93d58ccc567d8e2310a69860f1b93af19403" },
+  "vim-startify": { "branch": "master", "commit": "4e089dffdad46f3f5593f34362d530e8fe823dcf" },
+  "vim-unimpaired": { "branch": "master", "commit": "6d44a6dc2ec34607c41ec78acf81657248580bf1" },
+  "which-key.nvim": { "branch": "main", "commit": "8badb359f7ab8711e2575ef75dfe6fbbd87e4821" }
+}
