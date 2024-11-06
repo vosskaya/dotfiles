@@ -1,0 +1,17 @@
+# chezmoi
+# vim: ft=sh
+
+if command -v chezmoi &> /dev/null; then
+    ## chezmoi alias with inner alias and completion
+    cm() {
+        if [ "$1" = "st" ]; then
+            shift
+            chezmoi status "$@"
+        elif [ "$1" = "cd" ]; then
+            shift
+            cd ~/.local/share/chezmoi
+        else
+            chezmoi "$@"
+        fi
+    }
+fi

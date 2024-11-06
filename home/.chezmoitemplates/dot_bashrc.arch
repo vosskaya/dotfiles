@@ -121,10 +121,6 @@ export ICAROOT=/opt/Citrix/ICAClient
 #export PATH="$HOME/.cargo/bin:$PATH"
 #source $(rustc --print sysroot)/etc/bash_completion.d/cargo
 
-## for Go
-export PATH=$PATH:~/go/bin
-##  for Ruby
-export PATH=$PATH:~/.gem/ruby/2.7.0/bin
 ## for Android Studio
 export ANDROID_HOME=~/Android/Sdk
 ## for jetporch dev
@@ -135,38 +131,15 @@ export PATH="$PATH:/home/vosskaem/.local/bin"
 
 export WFICA_OPTS="-span 1"
 
-## tmux settings
-alias tma='tmux attach || tmux'
-alias tmad='tmux attach -d || tmux'
-alias tml='tmux ls'
-if [ $(tmux ls > /dev/null 2>&1 ; echo $?) -eq 0 ] ; then
-    echo "You have running tmux sessions:"
-    tmux ls
+## User or program specific aliases and functions
+if [ -d ~/.bashrc.d ]; then
+    for rc in ~/.bashrc.d/*; do
+        if [ -f "$rc" ]; then
+            . "$rc"
+        fi
+    done
 fi
-
-## chezmoi alias with inner alias and completion
-. ~/.chezmoi-completion.sh
-# alias vm='chezmoi'
-cm() {
-    if [ "$1" = "st" ]; then
-        shift
-        chezmoi status "$@"
-    elif [ "$1" = "cd" ]; then
-        shift
-        cd ~/.local/share/chezmoi
-    else
-        chezmoi "$@"
-    fi
-}
-
-function y() {
-    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-    yazi "$@" --cwd-file="$tmp"
-    if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-        builtin cd -- "$cwd"
-    fi
-    rm -f -- "$tmp"
-}
+unset rc
 
 eval "$(starship init bash)"
 eval "$(zoxide init --cmd cd bash)"
