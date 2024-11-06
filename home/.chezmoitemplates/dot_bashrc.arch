@@ -4,7 +4,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-#HISTCONTROL=ignoreboth
 HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
 HISTSIZE=20000
@@ -19,7 +18,6 @@ CPROMPT='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]'
 PS1="$CPROMPT"' \[\033[01;34m\]\$\[\033[00m\] '
 
 #alias ls='ls --color=auto'
-#alias ls='exa --git -hb --color-scale -@ --group-directories-first'
 alias ls='eza --git -h --color-scale all'
 alias ll='ls -l --icons'
 #alias la='ls -lA'
@@ -41,6 +39,7 @@ alias emacs='emacs -nw'
 alias top='htop'
 alias start='xdg-open'
 alias goback='cd $OLDPWD'
+alias hx='helix'
 alias lg='lazygit'
 alias t='timew'
 alias ts='timew sum'
@@ -56,6 +55,7 @@ export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
 export LESS='-R '
 
 # export EDITOR="emacs -nw"
+#export EDITOR="helix"
 export EDITOR="nvim"
 export VISUAL=$EDITOR
 
@@ -87,8 +87,6 @@ export PATH=$PATH:~/jasperstarter/bin
 # Powershell
 alias powershell='echo pwsh; pwsh'
 
-# Helix
-
 export ICAROOT=/opt/Citrix/ICAClient
 
 # if proxy is set, set Maven proxy
@@ -109,6 +107,8 @@ export ICAROOT=/opt/Citrix/ICAClient
 ## should be last statement because of PROXY ...
 ## check for Archlinux news:
 
+
+## check for Archlinux news:
 #echo "Checking for Archlinux News..."
 #if [ "$(LC_ALL=C newsboat -x reload print-unread)" != "0 unread articles" ] ; then
 #    #echo "$(LC_ALL=C newsboat -x reload print-unread)"
@@ -116,8 +116,6 @@ export ICAROOT=/opt/Citrix/ICAClient
 #fi
 #echo "... OK"
 
-#alias pacaur='if [ "$(LC_ALL=C newsboat -x reload print-unread)" != "0 unread articles" ] ; then newsboat; fi && pacaur'
-#alias yay='if [ "$(LC_ALL=C newsboat -x reload print-unread)" != "0 unread articles" ] ; then newsboat; fi && yay'
 
 ## for Rust
 #export PATH="$HOME/.cargo/bin:$PATH"
@@ -170,7 +168,5 @@ function y() {
     rm -f -- "$tmp"
 }
 
-
 eval "$(starship init bash)"
-#eval "$(zoxide init bash)"
 eval "$(zoxide init --cmd cd bash)"

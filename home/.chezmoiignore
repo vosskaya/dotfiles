@@ -1,0 +1,3 @@
+{{ if and (ne (index .chezmoi.osRelease "id") "arch") (ne (index .chezmoi.osRelease "idLike") "arch") }}
+.bashrc
+{{ end }}

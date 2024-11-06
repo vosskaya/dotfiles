@@ -1,4 +1,4 @@
-{{- if eq .chezmoi.osRelease.id "endeavouros" -}}
-{{-   template "dot_bashrc.arch" . -}}
+{{- if or (eq (index .chezmoi.osRelease "id") "arch") (eq (index .chezmoi.osRelease "idLike") "arch") -}}
+    {{- template "dot_bashrc.arch" . -}}
 {{- end -}}
 
