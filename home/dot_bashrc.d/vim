@@ -1,0 +1,16 @@
+# vim
+# vim: fs=sh
+
+if command -v vim &> /dev/null; then
+    alias vi='vim'
+    export EDITOR="vim"
+fi
+
+## we prefer nvim 
+if command -v nvim &> /dev/null; then
+    alias vi='nvim'
+    alias vimdiff='nvim -d'
+    export EDITOR="nvim"
+fi
+
+export VISUAL=$EDITOR
