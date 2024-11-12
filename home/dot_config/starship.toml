@@ -1,0 +1,51 @@
+## starship.toml
+## you can obtain this file from
+## curl --create-dirs -o ~/.config/starship.toml https://
+
+command_timeout = 2000
+add_newline = true
+
+[character]
+format = '$symbol '
+success_symbol = '[❯](bold green)'
+error_symbol = '[❯](bold red)'
+vicmd_symbol = '[❮](bold green)'
+disabled = false
+
+
+[directory]
+truncation_length = 8
+truncate_to_repo = false
+truncation_symbol = '.../'
+
+
+[directory.substitutions]
+
+[username]
+format = '[$user]($style)'
+show_always = true
+
+[hostname]
+ssh_only = false
+format = '@[$hostname]($style):'
+
+
+
+[status]
+format = '[$symbol$status]($style) '
+symbol = '✖'
+success_symbol = '✔️'
+not_executable_symbol = '🚫'
+not_found_symbol = '🔍'
+sigint_symbol = '🧱'
+signal_symbol = '⚡'
+style = 'bold red'
+map_symbol = false
+recognize_signal_code = true
+pipestatus = false
+pipestatus_separator = '|'
+pipestatus_format = '\[$pipestatus\] => [$symbol$common_meaning$signal_name$maybe_int]($style)'
+disabled = true
+
+[vagrant]
+disabled = true
