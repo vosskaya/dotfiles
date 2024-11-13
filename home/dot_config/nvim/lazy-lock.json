@@ -1,12 +1,12 @@
 {
   "ayu-vim": { "branch": "master", "commit": "ba4e08ec392afd0aaeaf594ba7e29b0652a0a094" },
-  "fzf": { "branch": "master", "commit": "d4d9b99879d7f870264d4e2e9358c81b5e59981d" },
+  "fzf": { "branch": "master", "commit": "215ab48222ac5fa8855c1e5bbf56742276b57324" },
   "fzf.vim": { "branch": "master", "commit": "556f45e79ae5e3970054fee4c4373472604a1b4e" },
   "gruvbox": { "branch": "master", "commit": "f1ecde848f0cdba877acb0c740320568252cc482" },
-  "lazy.nvim": { "branch": "main", "commit": "b1134ab82ee4279e31f7ddf7e34b2a99eb9b7bc9" },
+  "lazy.nvim": { "branch": "main", "commit": "7967abe55752aa90532e6bb4bd4663fe27a264cb" },
   "nvim-autopairs": { "branch": "master", "commit": "ee297f215e95a60b01fde33275cc3c820eddeebe" },
-  "nvim-lspconfig": { "branch": "master", "commit": "bc6ada4b0892b7f10852c0b8ca7209fd39a6d754" },
-  "orgmode": { "branch": "master", "commit": "8b1dfcdb035008adf607aa9aa94efa06beec88f8" },
+  "nvim-lspconfig": { "branch": "master", "commit": "d2d153a179ed59aa7134d7ebdf4d7dcb156efa22" },
+  "orgmode": { "branch": "master", "commit": "fafb8f14d85a68d8f0fca812444cc0fd594f0168" },
   "rust-tools.nvim": { "branch": "master", "commit": "676187908a1ce35ffcd727c654ed68d851299d3e" },
   "trailertrash.vim": { "branch": "master", "commit": "d4109aac96972ae759b389d3b374c1f4c058ee4f" },
   "vim-airline": { "branch": "master", "commit": "6c704f4b780e2b687dd21b24a19f598dde06dc22" },
@@ -17,5 +17,5 @@
   "vim-sandwich": { "branch": "master", "commit": "74cf93d58ccc567d8e2310a69860f1b93af19403" },
   "vim-startify": { "branch": "master", "commit": "4e089dffdad46f3f5593f34362d530e8fe823dcf" },
   "vim-unimpaired": { "branch": "master", "commit": "6d44a6dc2ec34607c41ec78acf81657248580bf1" },
-  "which-key.nvim": { "branch": "main", "commit": "8badb359f7ab8711e2575ef75dfe6fbbd87e4821" }
+  "which-key.nvim": { "branch": "main", "commit": "68e37e12913a66b60073906f5d3f14dee0de19f2" }
 }
