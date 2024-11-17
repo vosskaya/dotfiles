@@ -1,5 +1,5 @@
 # vim
-# vim: fs=sh
+# vim: ft=sh
 
 if command -v vim &> /dev/null; then
     alias vi='vim'
