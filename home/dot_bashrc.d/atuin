@@ -6,6 +6,9 @@ if command -v atuin &> /dev/null; then
     if [ -f /usr/share/bash-preexec/bash-preexec.sh ]; then
         . /usr/share/bash-preexec/bash-preexec.sh
         eval "$($ATUIN_INIT)"
+    elif [ -f /usr/local/share/bash-preexec.sh ]; then
+        . /usr/local/share/bash-preexec.sh
+        eval "$($ATUIN_INIT)"
     elif [ -f ~/.bash-preexec.sh ]; then
         . ~/.bash-preexec.sh
         eval "$($ATUIN_INIT)"
