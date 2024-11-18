@@ -1,0 +1,12 @@
+# tmux
+# vim: ft=sh
+
+if command -v tmux &> /dev/null; then
+    alias tma='tmux attach || tmux'
+    alias tmad='tmux attach -d || tmux'
+    alias tml='tmux ls'
+    if [ $(tmux ls > /dev/null 2>&1 ; echo $?) -eq 0 ] ; then
+        echo "You have running tmux sessions:"
+        tmux ls
+    fi
+fi
