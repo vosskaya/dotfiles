@@ -1,0 +1,24 @@
+# aliases
+# vim: ft=sh
+
+if command -v eza &> /dev/null; then
+    alias ls='eza --git -h --color-scale all'
+    alias ll='ls -l --icons'
+    alias la='ls -la'
+else
+    alias ls='ls --color=auto'
+    alias ll='ls -l'
+    alias la='ls -lA'
+fi
+alias lh='ls -lh'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+
+
+
