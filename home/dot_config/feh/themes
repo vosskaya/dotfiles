@@ -1,0 +1,8 @@
+feh -F --auto-rotate --cache-size 2048 -d --draw-exif --on-last-slide hold --sort name --version-sort
+#-version-sort
+# --version-sort
+
+# -Z ## auto-zoom
+# --info xxx
+# --on-last-slide hold
+# Allowed sort types are: name, filename, dirname, mtime, width, height, pixels, size, format. For sort modes other than name, filename, dirname, or mtime, a preload run is necessary
