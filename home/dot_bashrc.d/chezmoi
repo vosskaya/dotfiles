@@ -14,4 +14,13 @@ if command -v chezmoi &> /dev/null; then
             chezmoi "$@"
         fi
     }
+    if [ -f /usr/share/bash-completion/completions/chezmoi ]
+        ## add support for alias cm
+        . /usr/share/bash-completion/completions/chezmoi
+        if [[ $(type -t compopt) = "builtin" ]]; then
+            complete -o default -F __start_chezmoi cm
+        else
+            complete -o default -o nospace -F __start_chezmoi cm
+        fi
+    fi
 fi
