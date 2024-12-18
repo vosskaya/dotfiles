@@ -1,0 +1,17 @@
+#!/bin/sh
+if [ ! -f ~/.bashrc_local ] ; then
+    cat <<EOF > ~/.bashrc_local
+## This is a custom overwrite to things defined in .bashrc
+## It will never be overwritten by chezmoi or ansible!
+
+## Examples:
+
+#export EDITOR=emacs
+#export VISUAL=$EDITOR
+
+## switch to english
+#export LANG=C
+EOF
+fi
+
+

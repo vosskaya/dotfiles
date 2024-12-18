@@ -1,10 +1,15 @@
 # .include.bashrc.d
-# vim ft=sh
-# Source this file at the end of your .bashrc to include
-# files from .bashrc.d/
-# To overwrite setting add a file .bashrc.d/ZZZ_local
-# and put any own setting even overwrites from previous files.
-#
+# vim: ft=sh
+
+## Add the following lines at the end of your .bashrc
+
+# . ~/.include.bashrc.d
+# if [ -f ~/.bashrc_local ]; then
+#     . ~/.bashrc_local
+# fi
+
+## To overwrite setting add a file .bashrc_local
+## and put in any own settings you want to overwrite. 
 
 # User or program specific aliases and functions
 if [ -d ~/.bashrc.d ]; then

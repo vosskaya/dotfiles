@@ -25,3 +25,12 @@ chezmoi init $GITHUB_USERNAME
 chezmoi init --apply $GITHUB_USERNAME
 ```
 
+
+## Add this lines to the end of your .bashrc
+
+```sh
+. ~/.include.bashrc.d
+if [ -f ~/.bashrc_local ]; then
+    . ~/.bashrc_local
+fi
+```
