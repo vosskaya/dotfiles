@@ -1,0 +1,11 @@
+# sudo
+# vim: ft=sh
+
+# settings for git
+if [ -n "${SUDO_USER+set}" ] ; then
+    export GIT_COMMITTER_NAME=$SUDO_USER
+    export GIT_COMMITTER_EMAIL=$SUDO_USER@$(hostname)
+    export GIT_AUTHOR_EMAIL=$SUDO_USER@$(hostname)
+    export GIT_AUTHOR_NAME=$SUDO_USER
+fi
+
