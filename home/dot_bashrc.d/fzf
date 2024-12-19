@@ -1,0 +1,8 @@
+# fzf
+# vim: ft=sh
+
+if command -v fzf &> /dev/null; then
+    if command -v fd &> /dev/null; then
+        export FZF_DEFAULT_COMMAND='fd -H'
+    fi
+fi

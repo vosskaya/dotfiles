@@ -19,6 +19,32 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+alias start='xdg-open'
 
+if command -v lazygit &> /dev/null; then
+    alias lg='lazygit'
+fi
 
+if command -v emacs &> /dev/null; then
+    alias emacs='emacs -nw'
+    ## make "sudo emacs" work with alias:
+    alias sudo='sudo '
+fi
 
+if command -v bat &> /dev/null; then
+    alias cat='bat -pP'
+fi
+
+if command -v htop &> /dev/null; then
+    alias top='htop'
+fi
+
+if [ -f /usr/lib64/opensc-pkcs11.so ]; then
+    # Archlinux
+    alias ssh-add-smartcard='ssh-add -s /usr/lib64/opensc-pkcs11.so'
+fi
+
+if [ -f /usr/lib/x86_64-linux-gnu/opensc-pkcs11.so ]; then
+    # Debian
+    alias ssh-add-smartcard='ssh-add -s /usr/lib/x86_64-linux-gnu/opensc-pkcs11.so'
+fi
