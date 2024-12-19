@@ -1,6 +1,10 @@
 local wezterm = require 'wezterm'
 local config = {}
 
+-- config.font = wezterm.font 'SauceCodePro Nerd Font Mono'
+-- config.font = wezterm.font 'Fira Code'
+-- config.font = wezterm.font 'Anonymous Pro'
+
 -- Add custom-gnome-theme to the list of themes
 local custom_theme = require 'custom-gnome-theme'
 config.color_schemes = custom_theme.color_schemes
