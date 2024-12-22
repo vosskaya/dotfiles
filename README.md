@@ -1,7 +1,8 @@
 My personal config files
 =========================
 
-## Install chezmoi
+Install chezmoi
+----------------
 
 Use your package manager.
 
@@ -17,20 +18,22 @@ or
 snap install chezmoi --classic
 ```
 
-## Get the configs on a new machine
+Get the configs on a new machine
+---------------------------------
 
 ```sh
 chezmoi init $GITHUB_USERNAME
+chezmoi apply
 # or
 chezmoi init --apply $GITHUB_USERNAME
 ```
 
-
-## Add this lines to the end of your .bashrc
+Add this lines to the end of your .bashrc
+------------------------------------------
 
 ```sh
-. ~/.include.bashrc.d
-if [ -f ~/.bashrc_local ]; then
-    . ~/.bashrc_local
+. "$HOME/.include.bashrc.d"
+if [ -f "$HOME/.bashrc_local" ]; then
+    . "$HOME/.bashrc_local"
 fi
 ```
