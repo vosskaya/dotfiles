@@ -1,4 +1,5 @@
 .bashrc.d/chezmoi-completion
+.bashrc.d/pure_bash
 .bashrc.d/starship
 .bashrc.d/ZZZ_custom_overwrite
 .config/nvim/init.vim
