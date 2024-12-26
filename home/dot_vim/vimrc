@@ -54,6 +54,7 @@ if !has('nvim')
     Plug 'tpope/vim-unimpaired'
     Plug 'junegunn/fzf'
     Plug 'junegunn/fzf.vim'
+    Plug 'christoomey/vim-tmux-navigator'
     Plug 'sheerun/vim-polyglot'
     "Plug 'scrooloose/nerdtree'
     " Plug 'lambdalisue/fern.vim'
