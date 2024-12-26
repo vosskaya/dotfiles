@@ -1,0 +1,178 @@
+#!/bin/bash
+
+# pure prompt on bash
+#
+# Pretty, minimal BASH prompt, inspired by sindresorhus/pure(https://github.com/sindresorhus/pure)
+#
+# Author: Hiroshi Krashiki(Krashikiworks)
+# Modified by Volker Voßkömper (vosskaem)
+# released under MIT License, see LICENSE
+
+# Colors
+# readonly BLACK=$(tput setaf 0)
+RED=$(tput setaf 1)
+readonly RED
+GREEN=$(tput setaf 2)
+readonly GREEN
+# readonly YELLOW=$(tput setaf 3)
+BLUE=$(tput setaf 4)
+readonly BLUE
+# readonly MAGENTA=$(tput setaf 5)
+CYAN=$(tput setaf 6)
+readonly CYAN
+# readonly WHITE=$(tput setaf 7)
+BRIGHT_BLACK=$(tput setaf 8)
+readonly BRIGHT_BLACK
+BRIGHT_RED=$(tput setaf 9)
+readonly BRIGHT_RED
+BRIGHT_GREEN=$(tput setaf 10)
+readonly BRIGHT_GREEN
+# readonly BRIGHT_YELLOW=$(tput setaf 11)
+BRIGHT_BLUE=$(tput setaf 12)
+readonly BRIGHT_BLUE
+# readonly BRIGHT_MAGENTA=$(tput setaf 13)
+# readonly BRIGHT_CYAN=$(tput setaf 14)
+# readonly BRIGHT_WHITE=$(tput setaf 15)
+
+RESET=$(tput sgr0)
+readonly RESET
+
+# symbols
+pure_prompt_symbol="❯"
+pure_symbol_unpulled="⇣"
+pure_symbol_unpushed="⇡"
+pure_symbol_dirty="${RED}*"
+pure_symbol_staged="${GREEN}*"
+pure_symbol_unknown="${RED}?"
+pure_symbol_stash="≡"
+
+# if this value is true, remote status update will be async
+pure_git_async_update=false
+pure_git_raw_remote_status="+0 -0"
+
+__pure_echo_git_remote_status() {
+  local UNPULLED
+  local UNPUSHED
+
+  # get unpulled & unpushed status
+  if ${pure_git_async_update}; then
+    # do async
+    # FIXME: this async execution doesn't change pure_git_raw_remote_status. so remote status never changes in async mode
+    # FIXME: async mode takes as long as sync mode
+    pure_git_raw_remote_status=$(git status --porcelain=2 --branch | grep --only-matching --perl-regexp '\+\d+ \-\d+') &
+  else
+    # do sync
+    pure_git_raw_remote_status=$(git status --porcelain=2 --branch | grep --only-matching --perl-regexp '\+\d+ \-\d+')
+  fi
+
+  # shape raw status and check unpulled commit
+  UNPULLED=$(echo "${pure_git_raw_remote_status}" | grep --only-matching --perl-regexp '\-\d')
+  readonly UNPULLED
+  if [[ ${UNPULLED} != "-0" ]]; then
+    pure_git_unpulled=true
+  else
+    pure_git_unpulled=false
+  fi
+
+  # unpushed commit too
+  UNPUSHED=$(echo "${pure_git_raw_remote_status}" | grep --only-matching --perl-regexp '\+\d')
+  readonly UNPUSHED
+  if [[ ${UNPUSHED} != "+0" ]]; then
+    pure_git_unpushed=true
+  else
+    pure_git_unpushed=false
+  fi
+
+  # if unpulled -> ⇣
+  # if unpushed -> ⇡
+  # if both (branched from remote) -> ⇣⇡
+  if ${pure_git_unpulled}; then
+
+    if ${pure_git_unpushed}; then
+      echo "${RED}${pure_symbol_unpulled}${pure_symbol_unpushed}${RESET}"
+    else
+      echo "${BRIGHT_RED}${pure_symbol_unpulled}${RESET}"
+    fi
+
+  elif ${pure_git_unpushed}; then
+    echo "${BRIGHT_BLUE}${pure_symbol_unpushed}${RESET}"
+  fi
+}
+
+__pure_update_git_status() {
+
+  local git_status=""
+  local branch=""
+  local status=""
+  local stash=""
+
+  # if current directory isn't git repository, skip this
+  if [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == "true" ]]; then
+
+    branch="${RESET}(${BRIGHT_BLACK}$(git branch --show-current)"
+
+    # check clean/dirty/staged
+    status="${status}$(git status --porcelain | grep '^??' -q && echo "${pure_symbol_unknown}")"
+    status="${status}$(git diff --quiet || echo "${pure_symbol_dirty}")"
+    status="${status}$(git diff --quiet --staged || echo "${pure_symbol_staged}")"
+
+    # check for stashes
+    stash="$(git stash list --quiet | grep 'stash' -q && echo "${pure_symbol_stash}")"
+
+    git_status=${branch}
+    # if status is clean, skip this
+    if [[ -n ${status} ]]; then
+      git_status="${git_status} ${status}"
+    fi
+    # if repository have no remote, skip this
+    if [[ -n $(git remote show) ]]; then
+      if [[ -n $(__pure_echo_git_remote_status) ]]; then
+        git_status="${git_status} $(__pure_echo_git_remote_status)"
+      fi
+    fi
+    if [[ -n ${stash} ]]; then
+      git_status="${git_status} ${RESET}${stash}"
+    fi
+    git_status="${git_status}${RESET})"
+  fi
+
+  # Assign for external use, suppress SC2034
+  # shellcheck disable=SC2034
+  pure_git_status=${git_status}
+}
+
+# if last command failed, change prompt color
+__pure_echo_prompt_color() {
+
+  if [[ $? = 0 ]]; then
+    echo "${GREEN}"
+  else
+    echo "${RED}"
+  fi
+
+}
+
+__pure_update_prompt_color() {
+  # Assign for external use, suppress SC2034
+  # shellcheck disable=SC2034
+  pure_prompt_color=$(__pure_echo_prompt_color)
+}
+
+# if git isn't installed when shell launches, git integration isn't activated
+if [[ -n $(command -v git) ]]; then
+  PROMPT_COMMAND="__pure_update_git_status; ${PROMPT_COMMAND}"
+fi
+
+PROMPT_COMMAND="__pure_update_prompt_color; ${PROMPT_COMMAND}"
+
+case ${UID} in
+0) readonly FIRST_LINE="${BRIGHT_RED}\h${RESET}:${CYAN}\w \${pure_git_status}\n" ;;
+*) readonly FIRST_LINE="${BRIGHT_GREEN}\u${RESET}@${BRIGHT_BLUE}\h${RESET}:${CYAN}\w \${pure_git_status}\n" ;;
+esac
+# raw using of $ANY_COLOR (or $(tput setaf ***)) here causes a creepy bug when go back history with up arrow key
+# I couldn't find why it occurs
+readonly SECOND_LINE="\[\${pure_prompt_color}\]${pure_prompt_symbol}\[$RESET\] "
+PS1="\n${FIRST_LINE}${SECOND_LINE}"
+
+# Multiline command
+PS2="\[$BLUE\]${pure_prompt_symbol}\[$RESET\] "
