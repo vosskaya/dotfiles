@@ -1,3 +1,4 @@
-.config/nvim/init.vim
 .bashrc.d/chezmoi-completion
 .bashrc.d/ZZZ_custom_overwrite
+.config/nvim/init.vim
+.config/nvim/lua/plugins/default.lua
