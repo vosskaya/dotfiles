@@ -1,5 +1,4 @@
 .bashrc.d/chezmoi-completion
-.bashrc.d/starship
 .bashrc.d/ZZZ_custom_overwrite
 .config/nvim/init.vim
 .config/nvim/lua/plugins/default.lua
