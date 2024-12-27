@@ -2,6 +2,9 @@
 ## you can obtain this file from
 ## curl --create-dirs -o ~/.config/starship.toml https://
 
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
 command_timeout = 2000
 add_newline = true
 
@@ -9,7 +12,7 @@ add_newline = true
 format = '$symbol '
 success_symbol = '[❯](bold green)'
 error_symbol = '[❯](bold red)'
-vicmd_symbol = '[❮](bold green)'
+vimcmd_symbol = '[❮](bold green)'
 disabled = false
 
 
@@ -46,6 +49,12 @@ pipestatus = false
 pipestatus_separator = '|'
 pipestatus_format = '\[$pipestatus\] => [$symbol$common_meaning$signal_name$maybe_int]($style)'
 disabled = true
+
+[git_commit]
+tag_disabled = false
+
+[git_status]
+ignore_submodules = false
 
 [vagrant]
 disabled = true

@@ -2,5 +2,6 @@
 .bashrc.d/pure_bash
 .bashrc.d/starship
 .bashrc.d/ZZZ_custom_overwrite
+.bashrc.d/ZZZ_pure_bash
 .config/nvim/init.vim
 .config/nvim/lua/plugins/default.lua

@@ -1,0 +1,6 @@
+# starship
+# vim: ft=sh
+
+if command -v starship &> /dev/null; then
+    eval "$(starship init bash --print-full-init)"
+fi
