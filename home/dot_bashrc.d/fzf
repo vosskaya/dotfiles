@@ -1,8 +1,27 @@
 # fzf
 # vim: ft=sh
 
-if command -v fzf &> /dev/null; then
-    if command -v fd &> /dev/null; then
-        export FZF_DEFAULT_COMMAND='fd -H'
-    fi
+fzf_found=""
+# Find fzf binry global or in local vim or nvim installation
+if command -v fzf &>/dev/null; then
+  fzf_found="yes"
+  echo fzf-bash-1
+elif [[ -f "$HOME/.vim/plugged/fzf/bin/fzf" ]]; then
+  [[ ":$PATH:" != *":$HOME/.vim/plugged/fzf/bin:"* ]] && PATH="${PATH}:$HOME/.vim/plugged/fzf/bin"
+  export PATH
+  fzf_found="yes"
+  echo fzf-bash-2
+elif [[ -f "$HOME/.local/share/nvim/lazy/fzf/bin/fzf" ]]; then
+  [[ ":$PATH:" != *":$HOME/.local/share/nvim/lazy/fzf/bin:"* ]] && PATH="${PATH}:$HOME/.local/share/nvim/lazy/fzf/bin"
+  export PATH
+  fzf_found="yes"
+  echo fzf-bash-3
 fi
+
+if [[ -n $fzf_found ]]; then
+  if command -v fd &>/dev/null; then
+    export FZF_DEFAULT_COMMAND='fd -H'
+    echo fzf-bash-4
+  fi
+fi
+unset fzf_found
