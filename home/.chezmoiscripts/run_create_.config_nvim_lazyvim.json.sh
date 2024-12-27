@@ -1,7 +1,9 @@
 #!/bin/sh
-if [ ! -f ~/.config/nvim/lazyvim.json
-] ; then
-    cat <<EOF > ~/.config/nvim/lazyvim.json
+# vim: ft=sh
+if
+  [ ! -f ~/.config/nvim/lazyvim.json ]; then
+  mkdir -p ~/.config/nvim/
+  cat <<EOF >~/.config/nvim/lazyvim.json
 {
   "extras": [
     "lazyvim.plugins.extras.coding.mini-surround",
@@ -15,8 +17,7 @@ if [ ! -f ~/.config/nvim/lazyvim.json
     "lazyvim.plugins.extras.lang.markdown",
     "lazyvim.plugins.extras.lang.toml",
     "lazyvim.plugins.extras.lang.yaml",
-    "lazyvim.plugins.extras.util.dot"
-    "lazyvim.plugins.extras.util.mini-hipatterns"
+    "lazyvim.plugins.extras.util.dot""lazyvim.plugins.extras.util.mini-hipatterns"
   ],
   "news": {
     "NEWS.md": "10960"
@@ -25,5 +26,3 @@ if [ ! -f ~/.config/nvim/lazyvim.json
 }
 EOF
 fi
-
-
