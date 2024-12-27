@@ -52,10 +52,17 @@ if !has('nvim')
     Plug 'andymass/vim-matchup'
     Plug 'csexton/trailertrash.vim'
     Plug 'tpope/vim-unimpaired'
-    if !executable('fzf')
-      Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    if executable('fzf')
+      let system_fzf = exepath('fzf')
+      let plugin_fzf = expand('~/.vim/plugged/fzf/bin/fzf')
+      if system_fzf == plugin_fzf
+        " fzf belongs to this plugin, so we must keep it
+        Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+      else
+        Plug 'junegunn/fzf'
+      endif
     else
-      Plug 'junegunn/fzf'
+      Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     endif
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'sheerun/vim-polyglot'
