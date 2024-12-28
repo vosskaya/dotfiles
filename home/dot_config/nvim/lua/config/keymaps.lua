@@ -7,6 +7,7 @@ local map = vim.keymap.set
 -- buffers
 map("n", "gb", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 map("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+map("n", "<leader>bO", "<cmd>DiffOrig<cr>", { desc = "DiffOrig (diff buffer against saved file)" })
 
 -- simulate some unimpaired bindings
 map(
@@ -21,6 +22,13 @@ map(
   ':<C-u>execute "normal! m`" . v:count1 . "o" | normal! ``<CR>',
   { noremap = true, silent = true, desc = "Empty Line below" }
 )
+
+-- Buffer spell lang
+map("n", "<leader>bsv", "<cmd>setlocal spell spelllang<cr>", { desc = "view spell lang" })
+map("n", "<leader>bsdd", "<cmd>setlocal spell spelllang=de<cr>", { desc = "set spell lang: de" })
+map("n", "<leader>bsde", "<cmd>setlocal spell spelllang=de,en<cr>", { desc = "set spell lang: de,en" })
+map("n", "<leader>bsee", "<cmd>setlocal spell spelllang=en<cr>", { desc = "set spell lang: en" })
+map("n", "<leader>bsed", "<cmd>setlocal spell spelllang=en,de<cr>", { desc = "set spell lang: en,de" })
 
 -- Tools
 map("n", "<leader>to", "<cmd>Trailer<cr>", { desc = "Toggle Trailer Show" })
