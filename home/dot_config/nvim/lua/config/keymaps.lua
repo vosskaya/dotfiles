@@ -25,3 +25,9 @@ map(
 -- Tools
 map("n", "<leader>to", "<cmd>Trailer<cr>", { desc = "Toggle Trailer Show" })
 map("n", "<leader>tt", "<cmd>TrailerTrim<cr>", { desc = "Trailer Trim" })
+
+-- Include a local configuration if exists
+local local_init = vim.fn.stdpath("config") .. "/lua/config/keymaps_local.lua"
+if vim.fn.filereadable(local_init) == 1 then
+  dofile(local_init)
+end

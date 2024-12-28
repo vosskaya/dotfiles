@@ -3,8 +3,11 @@
 -- Add any additional options here
 
 vim.g.snacks_animate = false
+vim.g.autoformat = false
 
 local opt = vim.opt
+
+opt.spelllang = { "en", "de", }
 
 if vim.fn.has("gui_running") == 1 then
   opt.lines = 50
@@ -26,8 +29,8 @@ else
   end
 end
 
--- -- Include a local configuration if exists
--- local local_init = vim.fn.stdpath("config") .. "/init_local.lua"
--- if vim.fn.filereadable(local_init) == 1 then
---   dofile(local_init)
--- end
+-- Include a local configuration if exists
+local local_init = vim.fn.stdpath("config") .. "/lua/config/options_local.lua"
+if vim.fn.filereadable(local_init) == 1 then
+  dofile(local_init)
+end
