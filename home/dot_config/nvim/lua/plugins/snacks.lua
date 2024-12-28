@@ -15,9 +15,12 @@ return {
         },
       },
       indent = {
-        -- disable indent if we are in a ssh session or using sudo to
+        -- disable indent if we are in a ssh session to
         -- prevent clutter when copying from terminal screen
-        enabled = vim.fn.exists("$SSH_CONNECTION") ~= 1 and vim.fn.exists("$SUDO_USER") ~= 1,
+        -- See also: options.lua
+        enabled = not (vim.fn.exists("$SSH_CONNECTION") == 1 or vim.fn.executable("pstree") == 0 or vim.fn
+          .system("pstree -sl $$ | grep -q sshd; echo $?")
+          :match("0")),
       },
     },
   },
