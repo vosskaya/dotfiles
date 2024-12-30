@@ -4,6 +4,9 @@
 
 local map = vim.keymap.set
 
+-- start screen
+map("n", "<leader>a", "<cmd>Alpha<cr>", { desc = "Start Screen (Alpha)" })
+
 -- buffers
 map("n", "gb", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 map("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next Buffer" })
