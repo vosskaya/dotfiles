@@ -1,26 +1,39 @@
 # chezmoi
 # vim: ft=sh
 
-if command -v chezmoi &> /dev/null; then
-    ## chezmoi alias with inner alias and completion
-    cm() {
-        if [ "$1" = "st" ]; then
-            shift
-            chezmoi status "$@"
-        elif [ "$1" = "cd" ]; then
-            shift
-            cd ~/.local/share/chezmoi
-        else
-            chezmoi "$@"
-        fi
-    }
-    if [ -f /usr/share/bash-completion/completions/chezmoi ] ; then
-        ## add support for alias cm
-        . /usr/share/bash-completion/completions/chezmoi
-        if [[ $(type -t compopt) = "builtin" ]]; then
-            complete -o default -F __start_chezmoi cm
-        else
-            complete -o default -o nospace -F __start_chezmoi cm
-        fi
+if command -v chezmoi &>/dev/null; then
+  #   ## chezmoi alias with inner alias and completion
+  cm() {
+    if [ "$1" = "st" ]; then
+      shift
+      chezmoi status "$@"
+    elif [ "$1" = "cd" ]; then
+      shift
+      cd ~/.local/share/chezmoi || exit
+    else
+      chezmoi "$@"
     fi
+  }
+
+  ## make the alias work with bash-completion
+  _cm_load_completion() {
+    # Check if the chezmoi completion function is already loaded
+    if ! declare -F __start_chezmoi >/dev/null 2>&1; then
+      # Trigger Bash's mechanism to load the chezmoi completion script
+      _comp_load -D -- "chezmoi" && return 124
+    fi
+  }
+
+  _cm_completion() {
+    _cm_load_completion
+    __start_chezmoi
+  }
+
+  # Register the completion for cm
+  if [[ $(type -t compopt) = "builtin" ]]; then
+    complete -o default -F _cm_completion cm
+  else
+    complete -o default -o nospace -F _cm_completion cm
+  fi
+
 fi
