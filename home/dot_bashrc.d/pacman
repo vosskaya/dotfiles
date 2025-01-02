@@ -1,0 +1,14 @@
+# pacman
+# vim: ft=sh
+
+if command -v paru &>/dev/null; then
+  alias cleanup_orphan_packages="paru -Rns \$(paru -Qtdq)"
+elif command -v yay &>/dev/null; then
+  alias cleanup_orphan_packages="yay -Rns \$(yay -Qtdq)"
+elif command -v pacman &>/dev/null; then
+  alias cleanup_orphan_packages="sudo pacman -Rns \$(pacman -Qtdq)"
+fi
+if command -v pacman &>/dev/null; then
+  alias cleanup_pkccache="sudo paccache -rk2"
+  alias fixpacman="sudo rm /var/lib/pacman/db.lck"
+fi
