@@ -1,0 +1,39 @@
+#!/bin/sh
+if [ ! -f ~/.gitconfig ] ; then
+    cat <<EOF > ~/.gitconfig
+[branch]
+	autosetuprebase = always
+[push]
+	default = simple
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = true
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	desc = describe
+	unstage = reset HEAD --
+	ff = merge --ff-only
+	glog = log --graph --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\" --abbrev-commit --date=relative
+	vd = difftool
+	gd = difftool -g
+[core]
+	pager = less -FRX
+[init]
+	defaultBranch = main
+[protocol "file"]
+	allow = always
+[diff]
+	tool = nvimdiff
+[difftool]
+	prompt = false
+[merge]
+	tool = vimdiff
+[mergetool]
+	path = nvim
+EOF
+fi
